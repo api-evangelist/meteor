@@ -1,31 +1,45 @@
 aid: meteor
 name: Meteor
 description: >-
-  Documentation, resources, and API references to help you build and deploy with
-  Meteor.Get Started 
+  Meteor is a full-stack JavaScript platform for building modern web and mobile
+  applications. It provides documentation, resources, and API references to help
+  developers build and deploy applications with real-time capabilities.
 type: Index
-position: Consumer
-access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - API
-created: '2025-02-17'
-modified: '2025-02-17'
+  - JavaScript
+  - Full-Stack
+  - Real-time
+  - Web Development
+  - Mobile Development
 url: >-
   https://raw.githubusercontent.com/api-evangelist/meteor/refs/heads/main/apis.yml
+created: '2025-02-17'
+modified: '2026-03-16'
 specificationVersion: '0.19'
 apis:
   - aid: meteor:meteor
     name: Meteor
     description: >-
-      Documentation, resources, and API references to help you build and deploy
-      with Meteor.Get Started 
-    humanURL: ' https://docs.meteor.com/'
+      Meteor is an open-source JavaScript platform providing a full-stack
+      development environment with real-time data synchronization, server-side
+      rendering, and a package ecosystem (Atmosphere).
+    humanURL: https://docs.meteor.com/
     tags:
-      - API
+      - JavaScript
+      - Full-Stack
     properties:
       - type: Documentation
-        url: ' https://docs.meteor.com/'
+        url: https://docs.meteor.com/
+      - type: Getting Started
+        url: https://docs.meteor.com/about/install.html
+common:
+  - type: Website
+    url: https://www.meteor.com/
+  - type: GitHub Organization
+    url: https://github.com/meteor
+  - type: Community
+    url: https://forums.meteor.com/
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
