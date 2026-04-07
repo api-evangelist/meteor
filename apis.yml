@@ -7,11 +7,11 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - JavaScript
   - Full-Stack
-  - Real-time
-  - Web Development
+  - JavaScript
   - Mobile Development
+  - Real-Time
+  - Web Development
 url: >-
   https://raw.githubusercontent.com/api-evangelist/meteor/refs/heads/main/apis.yml
 created: '2025-02-17'
@@ -26,8 +26,8 @@ apis:
       rendering, and a package ecosystem (Atmosphere).
     humanURL: https://docs.meteor.com/
     tags:
-      - JavaScript
       - Full-Stack
+      - JavaScript
     properties:
       - type: Documentation
         url: https://docs.meteor.com/
