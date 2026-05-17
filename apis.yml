@@ -31,12 +31,12 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.meteor.com/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.meteor.com/about/install.html
 common:
   - type: Website
     url: https://www.meteor.com/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/meteor
   - type: Community
     url: https://forums.meteor.com/
