@@ -34,6 +34,8 @@ apis:
       - type: GettingStarted
         url: https://docs.meteor.com/about/install.html
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/meteor-software
   - type: Website
     url: https://www.meteor.com/
   - type: GitHubOrganization
