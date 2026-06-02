@@ -15,7 +15,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/meteor/refs/heads/main/apis.yml
 created: '2025-02-17'
-modified: '2026-04-28'
+modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
   - aid: meteor:meteor
@@ -33,6 +33,10 @@ apis:
         url: https://docs.meteor.com/
       - type: GettingStarted
         url: https://docs.meteor.com/about/install.html
+      - type: AsyncAPI
+        url: async-apis/meteor-ddp.yml
+      - type: WebSocket
+        url: wss://localhost:3000/websocket
 common:
   - type: LinkedIn
     url: https://www.linkedin.com/company/meteor-software

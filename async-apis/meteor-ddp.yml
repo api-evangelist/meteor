@@ -1,0 +1,678 @@
+asyncapi: 2.6.0
+info:
+  title: Meteor DDP (Distributed Data Protocol)
+  description: >-
+    AsyncAPI specification for Meteor's Distributed Data Protocol (DDP)
+    version "1". DDP is a JSON-over-WebSocket (or SockJS) protocol between a
+    Meteor client and a Meteor server that supports two operations: remote
+    procedure calls by the client to the server, and the client subscribing to
+    a set of documents while the server keeps the client informed about the
+    contents of those documents as they change over time. Messages are JSON
+    objects with a top-level `msg` field that specifies the message type, and
+    some fields are EJSON-encoded to carry richer types such as dates, binary
+    data, and user-defined types.
+  version: '1'
+  contact:
+    name: Meteor
+    url: https://www.meteor.com/
+  license:
+    name: MIT
+    url: https://github.com/meteor/meteor/blob/devel/LICENSE.txt
+externalDocs:
+  description: DDP Specification (packages/ddp/DDP.md)
+  url: https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md
+servers:
+  websocket:
+    url: '{host}:{port}/websocket'
+    protocol: wss
+    description: >-
+      Raw WebSocket endpoint for DDP. According to the DDP specification, a
+      DDP server is reachable over WebSockets at the `/websocket` URL. The
+      specification notes that this is likely to change in the future to be the
+      main app URL specifying a WebSocket subprotocol.
+    variables:
+      host:
+        default: localhost
+        description: Hostname of the Meteor DDP server.
+      port:
+        default: '3000'
+        description: Port on which the Meteor DDP server is listening.
+  sockjs:
+    url: '{host}:{port}/sockjs'
+    protocol: wss
+    description: >-
+      SockJS endpoint for DDP. According to the DDP specification, a DDP
+      server is reachable via SockJS at the `/sockjs` URL. SockJS provides a
+      WebSocket-like abstraction with fallback transports for environments
+      that cannot use raw WebSockets.
+    variables:
+      host:
+        default: localhost
+        description: Hostname of the Meteor DDP server.
+      port:
+        default: '3000'
+        description: Port on which the Meteor DDP server is listening.
+defaultContentType: application/json
+channels:
+  /:
+    description: >-
+      The single DDP message channel. All DDP messages flow over one
+      bidirectional connection (WebSocket or SockJS). Every message is a JSON
+      object that carries a `msg` field identifying its type. The client and
+      the server must ignore any unknown fields in messages. The `publish`
+      operation here describes messages the client sends to the server, and
+      the `subscribe` operation describes messages the server sends to the
+      client.
+    publish:
+      operationId: sendClientMessage
+      summary: Messages sent from a DDP client to a DDP server
+      description: >-
+        Client-originated DDP messages. The first message a client sends on a
+        new connection must be a `connect` message. After the connection is
+        established, the client may send `ping`, `pong`, `sub`, `unsub`, and
+        `method` messages. Sending anything other than `connect` as the first
+        message, or sending `connect` as a non-initial message, will result in
+        a server `error` reply.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/Connect'
+          - $ref: '#/components/messages/Ping'
+          - $ref: '#/components/messages/Pong'
+          - $ref: '#/components/messages/Sub'
+          - $ref: '#/components/messages/Unsub'
+          - $ref: '#/components/messages/Method'
+    subscribe:
+      operationId: receiveServerMessage
+      summary: Messages sent from a DDP server to a DDP client
+      description: >-
+        Server-originated DDP messages. After receiving a client `connect`,
+        the server replies with either `connected` (if it speaks the proposed
+        version) or `failed` (with a suggested version) and closes the
+        transport. Data messages (`added`, `changed`, `removed`,
+        `addedBefore`, `movedBefore`, `ready`, `nosub`), heartbeat replies
+        (`ping`, `pong`), method replies (`result`, `updated`), and top-level
+        protocol `error` messages are all delivered over this same channel.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/Connected'
+          - $ref: '#/components/messages/Failed'
+          - $ref: '#/components/messages/Ping'
+          - $ref: '#/components/messages/Pong'
+          - $ref: '#/components/messages/Nosub'
+          - $ref: '#/components/messages/Added'
+          - $ref: '#/components/messages/Changed'
+          - $ref: '#/components/messages/Removed'
+          - $ref: '#/components/messages/Ready'
+          - $ref: '#/components/messages/AddedBefore'
+          - $ref: '#/components/messages/MovedBefore'
+          - $ref: '#/components/messages/Result'
+          - $ref: '#/components/messages/Updated'
+          - $ref: '#/components/messages/Error'
+components:
+  messages:
+    Connect:
+      name: connect
+      title: Connect
+      summary: Client requests to establish a DDP session.
+      description: >-
+        Sent by the client as the first message on a new connection. The
+        client proposes a protocol `version` and lists the versions it
+        supports in `support`, ordered by preference. If reconnecting to an
+        existing session, the client includes the prior `session` identifier.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ConnectMessage'
+    Connected:
+      name: connected
+      title: Connected
+      summary: Server acknowledges a successful DDP session.
+      description: >-
+        Sent by the server in response to a client `connect` when the server
+        is willing to speak the proposed protocol version. The `session` field
+        carries an identifier for the DDP session.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ConnectedMessage'
+    Failed:
+      name: failed
+      title: Failed
+      summary: Server rejects the proposed DDP protocol version.
+      description: >-
+        Sent by the server when it does not support the protocol version
+        proposed in the client `connect`. The server includes a suggested
+        `version` informed by the client's `support` list and then closes the
+        underlying transport. The client is then free to reconnect proposing
+        a different version.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/FailedMessage'
+    Ping:
+      name: ping
+      title: Ping
+      summary: Heartbeat ping. Either side may send.
+      description: >-
+        Either the client or the server may send a `ping` at any time after
+        the connection is established. The sender may include an optional
+        `id` field used to correlate with the matching `pong` reply.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/PingMessage'
+    Pong:
+      name: pong
+      title: Pong
+      summary: Heartbeat reply. Either side may send.
+      description: >-
+        Reply to a `ping` message. When the received `ping` includes an `id`
+        field, the `pong` must include the same `id`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/PongMessage'
+    Sub:
+      name: sub
+      title: Sub
+      summary: Client subscribes to a named publication.
+      description: >-
+        Client request to subscribe to a named server publication, with an
+        arbitrary client-determined `id` used to refer to the subscription
+        in later messages. Optional `params` carry EJSON arguments to the
+        publication.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SubMessage'
+    Unsub:
+      name: unsub
+      title: Unsub
+      summary: Client cancels a subscription.
+      description: >-
+        Client request to cancel a previously created subscription, using
+        the `id` originally passed to `sub`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/UnsubMessage'
+    Nosub:
+      name: nosub
+      title: Nosub
+      summary: Server reports a subscription has ended or could not start.
+      description: >-
+        Sent by the server to indicate that the subscription with the given
+        `id` is no longer active. If an `error` is included, it explains why
+        (for example, an error raised by the subscription or
+        sub-not-found).
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/NosubMessage'
+    Added:
+      name: added
+      title: Added
+      summary: Server reports a document was added to an unordered collection.
+      description: >-
+        Indicates that a document was added to the client's local set for the
+        given `collection`. The `id` is the document ID. The optional
+        `fields` object contains the document's fields with EJSON values.
+        For a given collection the server should only send `added` messages
+        or `addedBefore` messages, not a mixture of both.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AddedMessage'
+    Changed:
+      name: changed
+      title: Changed
+      summary: Server reports a document's fields changed.
+      description: >-
+        Indicates that a document in the local set has new values for some
+        fields or has had some fields removed. The optional `fields` object
+        indicates fields to replace with new values. The optional `cleared`
+        array lists field names that are no longer in the document.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ChangedMessage'
+    Removed:
+      name: removed
+      title: Removed
+      summary: Server reports a document was removed from a collection.
+      description: >-
+        Indicates that a document was removed from the local set. The `id`
+        field is the ID of the document.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/RemovedMessage'
+    Ready:
+      name: ready
+      title: Ready
+      summary: Server reports that subscriptions have sent their initial batch.
+      description: >-
+        Sent by the server when one or more subscriptions have finished
+        sending their initial batch of data. The `subs` array lists the
+        subscription IDs that are now ready.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ReadyMessage'
+    AddedBefore:
+      name: addedBefore
+      title: AddedBefore
+      summary: Server reports a document was added at a position in an ordered collection.
+      description: >-
+        Ordered-collection variant of `added`. The `before` field is the ID
+        of the document the new document is being added before, or `null` to
+        add at the end. The DDP spec notes that ordered collection messages
+        are not currently used by Meteor but will likely be used in the
+        future.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AddedBeforeMessage'
+    MovedBefore:
+      name: movedBefore
+      title: MovedBefore
+      summary: Server reports a document moved within an ordered collection.
+      description: >-
+        Sent only for collections that use `addedBefore`. The `before` field
+        is the ID of the document to move this document before, or `null` to
+        move it to the end.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/MovedBeforeMessage'
+    Method:
+      name: method
+      title: Method
+      summary: Client invokes a server method (remote procedure call).
+      description: >-
+        Client request to invoke a server-side method. The client supplies a
+        `method` name, an arbitrary `id` for the call, optional `params` as
+        an array of EJSON items, and an optional `randomSeed` JSON value used
+        to seed pseudo-random number generation so that client and server can
+        generate matching values such as new document IDs.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/MethodMessage'
+    Result:
+      name: result
+      title: Result
+      summary: Server returns a method call result or error.
+      description: >-
+        Server reply to a `method` message, identified by the original `id`.
+        Carries either a `result` EJSON value (the method's return value, if
+        any) or an `error` Error object. There is no required ordering
+        between `result` and `updated` for a given method call.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ResultMessage'
+    Updated:
+      name: updated
+      title: Updated
+      summary: Server reports that method writes have been reflected in data messages.
+      description: >-
+        Sent by the server once it has finished sending the client all data
+        messages caused by one or more methods. The `methods` array contains
+        the IDs of the method calls whose writes have now been reflected.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/UpdatedMessage'
+    Error:
+      name: error
+      title: Error
+      summary: Server reports a top-level DDP protocol error.
+      description: >-
+        Sent by the server in response to erroneous client messages, such as
+        messages which are not valid JSON objects, unknown `msg` types, other
+        malformed client requests (missing required fields), or sending
+        anything other than `connect` as the first message, or sending
+        `connect` as a non-initial message. The `reason` field describes the
+        error. If the original message parsed properly, it is included in
+        `offendingMessage`.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ErrorMessage'
+  schemas:
+    ConnectMessage:
+      type: object
+      required:
+        - msg
+        - version
+        - support
+      properties:
+        msg:
+          type: string
+          enum:
+            - connect
+        session:
+          type: string
+          description: Identifier of an existing DDP session to reconnect to.
+        version:
+          type: string
+          description: The proposed protocol version.
+          example: '1'
+        support:
+          type: array
+          description: Protocol versions supported by the client, in order of preference.
+          items:
+            type: string
+    ConnectedMessage:
+      type: object
+      required:
+        - msg
+        - session
+      properties:
+        msg:
+          type: string
+          enum:
+            - connected
+        session:
+          type: string
+          description: An identifier for the established DDP session.
+    FailedMessage:
+      type: object
+      required:
+        - msg
+        - version
+      properties:
+        msg:
+          type: string
+          enum:
+            - failed
+        version:
+          type: string
+          description: A protocol version the server suggests connecting with.
+    PingMessage:
+      type: object
+      required:
+        - msg
+      properties:
+        msg:
+          type: string
+          enum:
+            - ping
+        id:
+          type: string
+          description: Optional identifier used to correlate with the corresponding `pong`.
+    PongMessage:
+      type: object
+      required:
+        - msg
+      properties:
+        msg:
+          type: string
+          enum:
+            - pong
+        id:
+          type: string
+          description: Optional identifier echoed from the corresponding `ping`.
+    SubMessage:
+      type: object
+      required:
+        - msg
+        - id
+        - name
+      properties:
+        msg:
+          type: string
+          enum:
+            - sub
+        id:
+          type: string
+          description: Arbitrary client-determined identifier for this subscription.
+        name:
+          type: string
+          description: Name of the publication to subscribe to.
+        params:
+          type: array
+          description: Optional EJSON arguments to the publication.
+          items: {}
+    UnsubMessage:
+      type: object
+      required:
+        - msg
+        - id
+      properties:
+        msg:
+          type: string
+          enum:
+            - unsub
+        id:
+          type: string
+          description: Identifier originally passed to `sub`.
+    NosubMessage:
+      type: object
+      required:
+        - msg
+        - id
+      properties:
+        msg:
+          type: string
+          enum:
+            - nosub
+        id:
+          type: string
+          description: Identifier originally passed to `sub`.
+        error:
+          $ref: '#/components/schemas/DDPError'
+    AddedMessage:
+      type: object
+      required:
+        - msg
+        - collection
+        - id
+      properties:
+        msg:
+          type: string
+          enum:
+            - added
+        collection:
+          type: string
+          description: Collection name.
+        id:
+          type: string
+          description: Document ID.
+        fields:
+          type: object
+          description: Optional object whose values are EJSON items.
+          additionalProperties: true
+    ChangedMessage:
+      type: object
+      required:
+        - msg
+        - collection
+        - id
+      properties:
+        msg:
+          type: string
+          enum:
+            - changed
+        collection:
+          type: string
+          description: Collection name.
+        id:
+          type: string
+          description: Document ID.
+        fields:
+          type: object
+          description: Optional object of fields to replace with new EJSON values.
+          additionalProperties: true
+        cleared:
+          type: array
+          description: Optional array of field names that are no longer in the document.
+          items:
+            type: string
+    RemovedMessage:
+      type: object
+      required:
+        - msg
+        - collection
+        - id
+      properties:
+        msg:
+          type: string
+          enum:
+            - removed
+        collection:
+          type: string
+          description: Collection name.
+        id:
+          type: string
+          description: Document ID.
+    ReadyMessage:
+      type: object
+      required:
+        - msg
+        - subs
+      properties:
+        msg:
+          type: string
+          enum:
+            - ready
+        subs:
+          type: array
+          description: IDs of subscriptions that have sent their initial batch of data.
+          items:
+            type: string
+    AddedBeforeMessage:
+      type: object
+      required:
+        - msg
+        - collection
+        - id
+        - before
+      properties:
+        msg:
+          type: string
+          enum:
+            - addedBefore
+        collection:
+          type: string
+          description: Collection name.
+        id:
+          type: string
+          description: Document ID.
+        fields:
+          type: object
+          description: Optional object whose values are EJSON items.
+          additionalProperties: true
+        before:
+          type:
+            - string
+            - 'null'
+          description: ID of the document to add this document before, or null to add at the end.
+    MovedBeforeMessage:
+      type: object
+      required:
+        - msg
+        - collection
+        - id
+        - before
+      properties:
+        msg:
+          type: string
+          enum:
+            - movedBefore
+        collection:
+          type: string
+          description: Collection name.
+        id:
+          type: string
+          description: Document ID.
+        before:
+          type:
+            - string
+            - 'null'
+          description: ID of the document to move this document before, or null to move to the end.
+    MethodMessage:
+      type: object
+      required:
+        - msg
+        - method
+        - id
+      properties:
+        msg:
+          type: string
+          enum:
+            - method
+        method:
+          type: string
+          description: Method name.
+        params:
+          type: array
+          description: Optional EJSON arguments to the method.
+          items: {}
+        id:
+          type: string
+          description: Arbitrary client-determined identifier for this method call.
+        randomSeed:
+          description: >-
+            Optional arbitrary client-determined seed for pseudo-random
+            generators. Currently expected to be a string; the algorithm by
+            which values are produced from this is not yet documented.
+    ResultMessage:
+      type: object
+      required:
+        - msg
+        - id
+      properties:
+        msg:
+          type: string
+          enum:
+            - result
+        id:
+          type: string
+          description: Identifier originally passed to `method`.
+        error:
+          $ref: '#/components/schemas/DDPError'
+        result:
+          description: Optional EJSON return value of the method, if any.
+    UpdatedMessage:
+      type: object
+      required:
+        - msg
+        - methods
+      properties:
+        msg:
+          type: string
+          enum:
+            - updated
+        methods:
+          type: array
+          description: IDs of method calls whose writes have been reflected in data messages.
+          items:
+            type: string
+    ErrorMessage:
+      type: object
+      required:
+        - msg
+        - reason
+      properties:
+        msg:
+          type: string
+          enum:
+            - error
+        reason:
+          type: string
+          description: Describes the protocol error.
+        offendingMessage:
+          description: If the original client message parsed properly, it is included here.
+    DDPError:
+      type: object
+      description: >-
+        Error object used in `result` and `nosub` messages to represent
+        errors raised by a method or subscription, including attempts to call
+        an unknown method or subscribe to an unknown publication.
+      required:
+        - error
+      properties:
+        error:
+          description: >-
+            Error code. A string is preferred (for example `'wrong-password'`),
+            but for backward compatibility may also be a number that often
+            matches the closest HTTP error code. Clients should accept
+            either.
+          oneOf:
+            - type: string
+            - type: number
+        reason:
+          type: string
+          description: Optional short reason for the error.
+        message:
+          type: string
+          description: Optional human-readable message.
+        errorType:
+          type: string
+          description: Pre-defined string identifying the error type.
+          enum:
+            - Meteor.Error
