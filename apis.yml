@@ -46,7 +46,7 @@ common:
     url: https://github.com/meteor
   - type: Community
     url: https://forums.meteor.com/
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.meteor.com/llms.txt
 maintainers:
   - FN: Kin Lane
