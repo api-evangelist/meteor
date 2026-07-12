@@ -38,6 +38,8 @@ apis:
       - type: WebSocket
         url: wss://localhost:3000/websocket
 common:
+  - type: DomainSecurity
+    url: security/meteor-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/meteor-software
   - type: Website
@@ -48,6 +50,8 @@ common:
     url: https://forums.meteor.com/
   - type: LlmsText
     url: https://docs.meteor.com/llms.txt
+  - url: https://forums.meteor.com/latest.rss
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
