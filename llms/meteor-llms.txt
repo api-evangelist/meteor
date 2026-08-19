@@ -1,0 +1,271 @@
+# Meteor.js 3 Documentation
+
+> Full-stack JavaScript platform for modern web and mobile applications.
+
+Meteor is a full-stack JavaScript platform for developing web and mobile applications.
+
+Key capabilities:
+- Real-time data synchronization with publications and subscriptions
+- Built-in accounts and authentication system
+- Frontend agnostic (React, Vue, Solid, Blaze, Svelte)
+- Zero-config build system with modern tooling (SWC, Rspack)
+- One-command deployment to Galaxy Cloud
+- TypeScript support with full type inference
+
+Current version: Meteor v3.5.1.
+
+## Structured API Data
+
+For complete API documentation in machine-readable format, see:
+- [api-reference.json](/api-reference.json) - Full API reference with all functions, parameters, and types
+
+## Table of Contents
+
+### About
+
+- [Roadmap](https://docs.meteor.com/about/roadmap.md)
+
+#### What is Meteor?
+
+### Quick Start
+
+- [Cordova](https://docs.meteor.com/about/cordova.md)
+- [Install](https://docs.meteor.com/about/install.md)
+- [Web Apps](https://docs.meteor.com/about/web-apps.md)
+
+#### Modern Build Stack
+
+- [Meteor Bundler Optimizations](https://docs.meteor.com/about/modern-build-stack/meteor-bundler-optimizations.md)
+- [Rspack Bundler Integration](https://docs.meteor.com/about/modern-build-stack/rspack-bundler-integration.md)
+
+### API
+
+- [Assets](https://docs.meteor.com/api/assets.md)
+- [Blaze](https://docs.meteor.com/api/blaze.md)
+- [Check](https://docs.meteor.com/api/check.md)
+- [Collections](https://docs.meteor.com/api/collections.md)
+- [DDPRateLimiter](https://docs.meteor.com/api/DDPRateLimiter.md)
+- [EJSON](https://docs.meteor.com/api/EJSON.md)
+- [Email](https://docs.meteor.com/api/email.md)
+- [Mobile Configuration](https://docs.meteor.com/api/app.md)
+- [Package.js](https://docs.meteor.com/api/package.md)
+- [Reactive Dict](https://docs.meteor.com/api/ReactiveDict.md)
+- [ReactiveVar](https://docs.meteor.com/api/ReactiveVar.md)
+- [Session](https://docs.meteor.com/api/session.md)
+- [Templates](https://docs.meteor.com/api/templates.md)
+- [Top Level Await](https://docs.meteor.com/api/top-level-await.md)
+- [Tracker](https://docs.meteor.com/api/Tracker.md)
+
+#### Accounts
+
+#### Meteor
+
+### Packages
+
+- [Maintained Packages](https://docs.meteor.com/packages/packages-listing.md)
+- [Meteor Package System](https://docs.meteor.com/packages/index.md)
+- [Using Atmosphere Packages](https://docs.meteor.com/packages/6.using-atmosphere-packages.md)
+- [Using npm Packages](https://docs.meteor.com/packages/4.using-npm-packages.md)
+- [Writing Atmosphere Packages](https://docs.meteor.com/packages/7.writing-atmosphere-packages.md)
+- [Writing npm Packages](https://docs.meteor.com/packages/5.writing-npm-packages.md)
+
+#### Accounts and security
+
+- [accounts-2fa](https://docs.meteor.com/packages/accounts-2fa.md)
+- [accounts-express](https://docs.meteor.com/packages/accounts-express.md)
+- [accounts-facebook](https://docs.meteor.com/packages/accounts-facebook.md)
+- [accounts-github](https://docs.meteor.com/packages/accounts-github.md)
+- [accounts-google](https://docs.meteor.com/packages/accounts-google.md)
+- [accounts-meetup](https://docs.meteor.com/packages/accounts-meetup.md)
+- [accounts-meteor-developer](https://docs.meteor.com/packages/accounts-meteor-developer.md)
+- [accounts-twitter](https://docs.meteor.com/packages/accounts-twitter.md)
+- [accounts-ui](https://docs.meteor.com/packages/accounts-ui.md)
+- [accounts-ui-unstyled](https://docs.meteor.com/packages/accounts-ui-unstyled.md)
+- [accounts-weibo](https://docs.meteor.com/packages/accounts-weibo.md)
+- [Browser Policy](https://docs.meteor.com/packages/browser-policy.md)
+- [OAuth Encryption](https://docs.meteor.com/packages/oauth-encryption.md)
+- [OAuth Services Configuration](https://docs.meteor.com/packages/service-configuration.md)
+- [Passwordless](https://docs.meteor.com/packages/accounts-passwordless.md)
+- [Roles](https://docs.meteor.com/packages/roles.md)
+
+#### Developer tools
+
+- [Audit Argument Checks](https://docs.meteor.com/packages/audit-argument-checks.md)
+- [autopublish](https://docs.meteor.com/packages/autopublish.md)
+- [Autoupdate](https://docs.meteor.com/packages/autoupdate.md)
+- [Bundle Visualizer](https://docs.meteor.com/packages/bundle-visualizer.md)
+- [disable-oplog](https://docs.meteor.com/packages/disable-oplog.md)
+- [facts-base](https://docs.meteor.com/packages/facts-base.md)
+- [facts-ui](https://docs.meteor.com/packages/facts-ui.md)
+- [Fetch](https://docs.meteor.com/packages/fetch.md)
+- [force-ssl](https://docs.meteor.com/packages/force-ssl.md)
+- [Hot Module Replacement](https://docs.meteor.com/packages/hot-module-replacement.md)
+- [insecure](https://docs.meteor.com/packages/insecure.md)
+- [launch-screen](https://docs.meteor.com/packages/launch-screen.md)
+- [Logging](https://docs.meteor.com/packages/logging.md)
+- [mobile-experience](https://docs.meteor.com/packages/mobile-experience.md)
+- [mobile-status-bar](https://docs.meteor.com/packages/mobile-status-bar.md)
+- [Modern-browsers](https://docs.meteor.com/packages/modern-browsers.md)
+- [Modules](https://docs.meteor.com/packages/modules.md)
+- [Random](https://docs.meteor.com/packages/random.md)
+- [Server Rendering](https://docs.meteor.com/packages/server-render.md)
+- [Standard Minifier CSS](https://docs.meteor.com/packages/standard-minifier-css.md)
+- [static-html](https://docs.meteor.com/packages/static-html.md)
+- [URL](https://docs.meteor.com/packages/url.md)
+- [WebApp](https://docs.meteor.com/packages/webapp.md)
+
+#### Framework compatibility
+
+- [CoffeeScript](https://docs.meteor.com/packages/coffeescript.md)
+- [ECMAScript](https://docs.meteor.com/packages/ecmascript.md)
+- [less](https://docs.meteor.com/packages/less.md)
+- [react-meteor-data](https://docs.meteor.com/packages/react-meteor-data.md)
+- [TypeScript](https://docs.meteor.com/packages/typescript.md)
+
+#### Community Packages
+
+- [Archive](https://docs.meteor.com/community-packages/archive.md)
+- [Cluster](https://docs.meteor.com/community-packages/cluster.md)
+- [Jam Method](https://docs.meteor.com/community-packages/jam-method.md)
+- [Mail Preview](https://docs.meteor.com/community-packages/mail-preview.md)
+- [Meteor-RPC](https://docs.meteor.com/community-packages/meteor-rpc.md)
+- [Mongo-transactions](https://docs.meteor.com/community-packages/mongo-transactions.md)
+- [Offline](https://docs.meteor.com/community-packages/offline.md)
+- [Pub-sub](https://docs.meteor.com/community-packages/pub-sub.md)
+- [Soft-delete](https://docs.meteor.com/community-packages/soft-delete.md)
+
+### Troubleshooting
+
+- [Expired Certificates](https://docs.meteor.com/troubleshooting/expired-certificate.md)
+- [Hot Code Push Troubleshooting](https://docs.meteor.com/troubleshooting/hot-code-push.md)
+- [Topology Closed Error](https://docs.meteor.com/troubleshooting/mongodb-connection.md)
+- [Windows](https://docs.meteor.com/troubleshooting/windows.md)
+
+### Command Line
+
+- [Environment Variables](https://docs.meteor.com/cli/environment-variables.md)
+- [Using Core Types](https://docs.meteor.com/cli/using-core-types.md)
+
+### Tutorials
+
+- [Application Structure](https://docs.meteor.com/tutorials/application-structure/index.md)
+- [Build System](https://docs.meteor.com/about/build-tool.md)
+- [Meteor.js 3 + Blaze](https://docs.meteor.com/tutorials/blaze/index.md)
+- [Meteor.js 3 + React](https://docs.meteor.com/tutorials/react/index.md)
+- [Meteor.js 3 + Solid](https://docs.meteor.com/tutorials/solid/index.md)
+- [Meteor.js 3 + Svelte](https://docs.meteor.com/tutorials/svelte/index.md)
+- [Meteor.js 3 + Vue 3](https://docs.meteor.com/tutorials/vue/meteorjs3-vue3.md)
+- [Sharing Code and Data Between Meteor Apps](https://docs.meteor.com/tutorials/multiple-meteor-apps/index.md)
+
+#### Core Concepts
+
+- [Collections and Schemas](https://docs.meteor.com/tutorials/collections/collections.md)
+- [Meteor Methods](https://docs.meteor.com/tutorials/methods/methods.md)
+- [Publications and Data Loading](https://docs.meteor.com/tutorials/data-loading/data-loading.md)
+- [Users and Accounts](https://docs.meteor.com/tutorials/accounts/accounts.md)
+
+#### Production
+
+- [Application Security for Production](https://docs.meteor.com/tutorials/security/security.md)
+- [Deployment and Monitoring](https://docs.meteor.com/tutorials/deployment/deployment.md)
+- [Testing](https://docs.meteor.com/tutorials/testing/testing.md)
+
+#### Advanced Topics
+
+- [Apollo and GraphQL](https://docs.meteor.com/tutorials/apollo/apollo.md)
+- [Code Style](https://docs.meteor.com/tutorials/code-style/code-style.md)
+
+#### Integrations
+
+- [Flowbite UI with Tailwind CSS](https://docs.meteor.com/tutorials/integrations/flowbite.md)
+- [React Native Integration](https://docs.meteor.com/tutorials/integrations/react-native.md)
+
+### Changelog
+
+- [Changelog](https://docs.meteor.com/history.md)
+
+### Performance
+
+- [Change Streams Observer Driver](https://docs.meteor.com/performance/change-streams-observer-driver.md)
+- [DDP Transport](https://docs.meteor.com/performance/ddp-transport.md)
+- [Performance Improvements](https://docs.meteor.com/performance/performance-improvement.md)
+- [Websocket Compression in Meteor](https://docs.meteor.com/performance/websocket-compression.md)
+
+### Community
+
+- [Contributors](https://docs.meteor.com/community/contributors.md)
+- [Untitled](https://docs.meteor.com/community/contributing.md)
+
+### Other
+
+- [AppCache](https://docs.meteor.com/packages/appcache.md)
+- [Changelog](https://docs.meteor.com/generators/changelog/versions/99999-generated-code-warning.md)
+- [Command Line](https://docs.meteor.com/cli/index.md)
+- [Community Packages](https://docs.meteor.com/packages/community-packages.md)
+- [Core Packages](https://docs.meteor.com/api/packages-listing.md)
+- [ddp-rate-limiter](https://docs.meteor.com/packages/ddp-rate-limiter.md)
+- [Dynamic Imports](https://docs.meteor.com/packages/dynamic-import.md)
+- [Jam Method](https://docs.meteor.com/community-packages/wormhole.md)
+- [Listing of all meteor core packages](https://docs.meteor.com/generators/packages-listing/README.md)
+- [Markdown](https://docs.meteor.com/packages/markdown.md)
+- [mongo](https://docs.meteor.com/packages/mongo.md)
+- [Runtime API Examples](https://docs.meteor.com/api-examples.md)
+- [Untitled](https://docs.meteor.com/CONTRIBUTING.md)
+- [Untitled](https://docs.meteor.com/api/index.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.3.1.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.3.0.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.2.2.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.1.2.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.2.0.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.1.1.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.1.0.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.0.4.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.0.3.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.0.0.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.0.2.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.0.1.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/README.md)
+- [Untitled](https://docs.meteor.com/packages/1.when-to-use-meteor-packages.md)
+- [Untitled](https://docs.meteor.com/index.md)
+- [Untitled](https://docs.meteor.com/generators/meteor-versions/README.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.5.1.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.5.0.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.4.1.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.4.0.md)
+- [Untitled](https://docs.meteor.com/generators/changelog/versions/3.3.2.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/1.creating-the-app.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/2.collections.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/2.collections.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/1.creating-the-app.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/9.next-steps.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/7.adding-user-accounts.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/8.deploying.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/6.filter-tasks.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/5.styles.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/4.update-and-remove.md)
+- [Untitled](https://docs.meteor.com/tutorials/blaze/3.forms-and-events.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/4.update-and-remove.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/3.forms-and-events.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/1.creating-the-app.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/9.next-steps.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/8.deploying.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/7.adding-user-accounts.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/6.filter-tasks.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/5.styles.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/4.update-and-remove.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/3.forms-and-events.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/2.collections.md)
+- [Untitled](https://docs.meteor.com/tutorials/solid/1.creating-the-app.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/8.deploying.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/9.next-steps.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/7.adding-user-accounts.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/6.filter-tasks.md)
+- [Untitled](https://docs.meteor.com/tutorials/react/5.styles.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/3.forms-and-events.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/2.collections.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/9.next-steps.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/8.deploying.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/7.adding-user-accounts.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/6.filter-tasks.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/5.styles.md)
+- [Untitled](https://docs.meteor.com/tutorials/svelte/4.update-and-remove.md)
