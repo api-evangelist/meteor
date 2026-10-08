@@ -59,6 +59,12 @@ apis:
       - type: AsyncAPI
         url: async-apis/meteor-ddp.yml
 common:
+  - type: Plans
+    url: plans/meteor-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/meteor-rate-limits.yml
+  - type: FinOps
+    url: finops/meteor-finops.yml
   - type: DomainSecurity
     url: security/meteor-domain-security.yml
   - type: LinkedIn
